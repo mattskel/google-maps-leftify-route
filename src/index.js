@@ -1,42 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
-// import reportWebVitals from './reportWebVitals';
 
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
-// // If you want to start measuring performance in your app, pass a function
-// // to log results (for example: reportWebVitals(console.log))
-// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
-
-/*
-class Square extends React.Component {
-  // Not needed because the square doesn't keep track
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     value: null
-  //   }
-  // }
-  render() {
-    return (
-      <button 
-        className="square" 
-        onClick={() => this.props.onClick()}
-      >
-        {this.props.value}
-      </button>
-    );
-  }
-}
-*/
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -46,32 +11,8 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     // squares: Array(9).fill(null),
-  //     // xIsNext: true,
-  //     squares: props.squares,
-  //     xIsNext: props.xIsNext
-  //   }
-  // }
-
-  // handleClick(i) {
-  //   const squares = this.state.squares.slice(); // Use slice to create a copy
-  //   if (calculateWinner(squares) || squares[i]) {
-  //     return;
-  //   }
-  //   // squares[i] = 'X';
-  //   squares[i] = (this.state.xIsNext) ? 'X' : 'O';
-  //   this.setState({
-  //     squares: squares,
-  //     xIsNext: !this.state.xIsNext
-  //   });
-  // }
 
   renderSquare(i) {
-    // return <Square value={this.state.squares[i]} />;
-    // console.log('renderSquare');
     return (
       <Square
         value={this.props.squares[i]}
@@ -81,15 +22,6 @@ class Board extends React.Component {
   }
 
   render() {
-    // const status = 'Next player: X';
-    // const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    // const winner = calculateWinner(this.state.squares);
-    // let status;
-    // if (winner) {
-    //   status = 'Winner: ' + winner;
-    // } else {
-    //   status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    // }
 
     return (
       <div>
@@ -124,36 +56,18 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
     }
-
-    // console.log('constructor');
-    // console.log(this.state);
   }
 
-  // renderBoard() {
-  //   // Get the most recent 
-  //   const mostRecent =this.state.history[this.state.history.length - 1]
-  //   return (
-  //     <Board
-  //       sqaures={mostRecent.squares}
-  //       xIsNext={this.state.xIsNext}
-  //     />
-  //   )
-  // }
   handleClick(i) {
-    // console.log('handleClick');
-    // console.log(i);
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    console.log(squares);
     if (calculateWinner(squares) || squares[i]) {
-      console.log('winner')
       return;
     }
 
     squares[i] = (this.state.xIsNext) ? 'X' : 'O';
     this.setState({
-      // history: history.push(squares),
       history: history.concat([{
         squares: squares,
       }]),
@@ -170,13 +84,9 @@ class Game extends React.Component {
   }
 
   render() {
-    // console.log('render')
-    // console.log(this.state);
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    console.log(current)
     const winner = calculateWinner(current.squares);
-
     const moves = history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move :
@@ -194,7 +104,6 @@ class Game extends React.Component {
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
-    // console.log(current.squares);
     return (
       <div className="game">
         <div className="game-board">
