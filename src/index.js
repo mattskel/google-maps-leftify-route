@@ -1,6 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import SearchLocationInput from './SearchLocationInput';
+
+// import React, { Component } from 'react';
+// import { Map, GoogleApiWrapper } from 'google-maps-react';
+// import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import { GoogleMap, withGoogleMap, withScriptjs } from "react-google-maps"
+
+// const apiKey = 'AIzaSyCS_GT9JiqNZviHRqN91R7V9ZYWFLTB61s';
 
 function Square(props) {
   return (
@@ -46,6 +54,7 @@ class Board extends React.Component {
   }
 }
 
+// eslint-disable-next-line
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -121,10 +130,78 @@ class Game extends React.Component {
   }
 }
 
+class StartingPointInput extends React.Component {
+  render() {
+    return (
+      <div>
+        {/* <input></input> */}
+        {/* <GooglePlacesAutocomplete */}
+          {/* apiKey={apiKey} */}
+          {/* // selectProps={{onChange: this.props.handleSelect}} */}
+        {/* /> */}
+      </div>
+    )
+  }
+}
+
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+  >
+    {/* {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />} */}
+  </GoogleMap>
+))
+
+class MapContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    // this.state = {
+    //   startingPoint: undefined,
+    //   myValue: 'value',
+    //   googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`
+    // }
+    console.log('constructor');
+  }
+
+  handleSelect(i) {
+    console.log(i)
+  }
+  // Next step will be here
+  // https://www.digitalocean.com/community/tutorials/how-to-integrate-the-google-maps-api-into-react-applications
+  // https://tomchentw.github.io/react-google-maps/
+  render() {
+    return (
+      <div className="map">
+        <div>This is where the map will go</div>
+        <StartingPointInput 
+          // myValue={this.state.myValue}
+          // handleSelect={this.handleSelect}
+        />
+        <SearchLocationInput onChange={() => null} />
+        {/* <Map
+          google={this.props.google}
+        /> */}
+        {/* <GoogleMap /> */}
+        <MyMapComponent
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS_GT9JiqNZviHRqN91R7V9ZYWFLTB61s&v=3.exp&libraries=geometry,drawing,places"
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+        />
+      </div>
+    )
+  }
+}
+
+// const WrappedMap = GoogleApiWrapper({
+//   apiKey
+// })(MapContainer);
+
 // ========================================
 
 ReactDOM.render(
-  <Game />,
+  <MapContainer />,
   document.getElementById('root')
 );
 
@@ -148,3 +225,27 @@ function calculateWinner(squares) {
   return null;
 }
 
+// const MyMapComponent = compose(
+//   withProps({
+//     /**
+//      * Note: create and replace your own key in the Google console.
+//      * https://console.developers.google.com/apis/dashboard
+//      * The key "AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q" can be ONLY used in this sandbox (no forked).
+//      */
+//     googleMapURL:
+//       "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q&v=3.exp&libraries=geometry,drawing,places",
+//     loadingElement: <div style={{ height: `100%` }} />,
+//     containerElement: <div style={{ height: `400px` }} />,
+//     mapElement: <div style={{ height: `100%` }} />
+//   }),
+//   withScriptjs,
+//   withGoogleMap
+// )(props => (
+//   <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
+//     {props.isMarkerShown && (
+//       <Marker position={{ lat: -34.397, lng: 150.644 }} />
+//     )}
+//   </GoogleMap>
+// ));
+
+// ReactDOM.render(<MyMapComponent isMarkerShown />, document.getElementById("root"));
