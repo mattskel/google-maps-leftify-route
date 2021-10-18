@@ -12,10 +12,10 @@ code {
     monospace;
 } */
 
-body {
+/* body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
-}
+} */
 
 ol, ul {
   padding-left: 30px;
@@ -61,4 +61,19 @@ ol, ul {
 
 .game-info {
   margin-left: 20px;
+}
+
+.map-container {
+  height: 75%;
+}
+
+#map {
+  position: fixed !important; 
+  height: 100% !important;
+  width: 100% !important;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
