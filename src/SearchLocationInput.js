@@ -39,11 +39,19 @@ function handleScriptLoad(updateQuery, autoCompleteRef) {
   );
 }
 
-async function handlePlaceSelect(updateQuery) {
-  const addressObject = autoComplete.getPlace(); // get place from google api
+async function handlePlaceSelect(updateQuery, addressObject, map) {
+  // const addressObject = autoComplete.getPlace(); // get place from google api
   const query = addressObject.formatted_address;
   updateQuery(query);
   console.log(addressObject);
+
+  const marker = new window.google.maps.Marker({
+    position: addressObject.geometry.location,
+    map: map,
+  });
+
+  map.setCenter(addressObject.geometry.location);
+  
 }
 
 function SearchLocationInput() {
@@ -72,4 +80,5 @@ function SearchLocationInput() {
   );
 }
 
-export default SearchLocationInput;
+// export default SearchLocationInput;
+export {handlePlaceSelect};
