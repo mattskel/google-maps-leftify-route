@@ -7,6 +7,9 @@ import {handlePlaceSelect} from './SearchLocationInput.js';
 
 let autoComplete;
 let map;
+// let marker;
+let directionsService;
+let directionsRenderer
 
 function handleScriptLoad(autoCompleteRef, mapRef, updateQuery) {
   const homeCoords = {lat: -31.922, lng: 115.891}
@@ -15,16 +18,20 @@ function handleScriptLoad(autoCompleteRef, mapRef, updateQuery) {
     autoCompleteRef.current,
     { componentRestrictions: { country: "au" }, fields: ['formatted_address', 'geometry'] }
   );
-  const marker = new window.google.maps.Marker({
-    position: homeCoords,
-    map: map,
-  });
+  // marker = new window.google.maps.Marker({
+  //   position: homeCoords,
+  //   map: map,
+  // });
+
+  directionsService = new window.google.maps.DirectionsService();
+  directionsRenderer = new window.google.maps.DirectionsRenderer();
+  directionsRenderer.setMap(map);
   autoComplete.setFields(["address_components", "formatted_address"]); // specify what properties we will get from API
   // add a listener to handle when the place is selected
   autoComplete.addListener("place_changed", () => {
     const addressObject = autoComplete.getPlace(); // get place from google api
     console.log('addressObject', addressObject);
-    handlePlaceSelect(updateQuery, addressObject, map)
+    handlePlaceSelect(updateQuery, addressObject, map, directionsService, directionsRenderer)
   });
 }
 

@@ -39,18 +39,32 @@ function handleScriptLoad(updateQuery, autoCompleteRef) {
   );
 }
 
-async function handlePlaceSelect(updateQuery, addressObject, map) {
+async function handlePlaceSelect(updateQuery, addressObject, map, directionsService, directionsRenderer) {
   // const addressObject = autoComplete.getPlace(); // get place from google api
   const query = addressObject.formatted_address;
   updateQuery(query);
   console.log(addressObject);
 
-  const marker = new window.google.maps.Marker({
-    position: addressObject.geometry.location,
-    map: map,
-  });
+  const homeCoords = {lat: -31.922, lng: 115.891}
 
-  map.setCenter(addressObject.geometry.location);
+  // const marker = new window.google.maps.Marker({
+  //   position: addressObject.geometry.location,
+  //   map: map,
+  // });
+  // marker.setPosition(addressObject.geometry.location)
+
+  // map.setCenter(addressObject.geometry.location);
+
+  var request = {
+    origin: addressObject.geometry.location,
+    destination: homeCoords,
+    travelMode: 'DRIVING'
+  };
+  directionsService.route(request, function(result, status) {
+    if (status === 'OK') {
+      directionsRenderer.setDirections(result);
+    }
+  });
   
 }
 
