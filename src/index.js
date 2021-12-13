@@ -35,6 +35,39 @@ function handleScriptLoad(autoCompleteRef, mapRef, updateQuery) {
   });
 }
 
+class Directions extends React.Component {
+  handleClick() {
+    console.log('handleClick');
+  }
+
+  render() {
+    return (
+      <button onClick={() => this.handleClick()}>
+        Get directions
+      </button>
+    );
+  }
+}
+
+class LocationInput extends React.Component {
+  constructor(props) {
+    super(props)
+    this.locationInput = React.createRef();
+    // autoComplete = new window.google.maps.places.Autocomplete(
+    //   autoCompleteRef.current,
+    //   { componentRestrictions: { country: "au" }, fields: ['formatted_address', 'geometry'] }
+    // );
+  }
+
+  render() {
+    return (
+      <input 
+        ref={this.locationInput}
+      />
+    )
+  }
+}
+
 const Maps = () => {
   const mapRef = useRef(null);
   const autoCompleteRef = useRef(null);
@@ -48,11 +81,14 @@ const Maps = () => {
   }, []);
   return (
     <div>
+      
       <input
         ref={autoCompleteRef}
         onChange={event => setQuery(event.target.value)}
         value={query}
       />
+      <LocationInput />
+      <Directions />
       {/* <div id="map"></div> */}
       <div id="map" ref={mapRef}></div>
     </div>  
@@ -71,6 +107,10 @@ class MapContainer extends React.Component {
     return (
       <div>
         <div>This is where the map will go</div>
+        {/* <div><button>my special button</button></div>
+        <div>
+          <Directions/>
+        </div> */}
         <div className="map-container">
           <Maps />
         </div>

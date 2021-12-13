@@ -58,10 +58,12 @@ async function handlePlaceSelect(updateQuery, addressObject, map, directionsServ
   var request = {
     origin: addressObject.geometry.location,
     destination: homeCoords,
-    travelMode: 'DRIVING'
+    travelMode: 'DRIVING',
+    provideRouteAlternatives: true
   };
   directionsService.route(request, function(result, status) {
     if (status === 'OK') {
+      console.log(result);
       directionsRenderer.setDirections(result);
     }
   });
