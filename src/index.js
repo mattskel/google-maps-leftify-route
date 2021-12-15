@@ -95,6 +95,12 @@ const Maps = () => {
   );
 }
 
+const myNotesElement = <div>
+  These are my notes. The story so far.
+  Create a new git repo. Then when I have the git repo I can push to a heroku app.
+  I have just found out how to inject html!
+</div>
+
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -106,6 +112,7 @@ class MapContainer extends React.Component {
     console.log('render');
     return (
       <div>
+        {myNotesElement}
         <div>This is where the map will go</div>
         {/* <div><button>my special button</button></div>
         <div>
